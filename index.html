@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>봉사활동 소감문 | 동아리</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── 리셋 & 기본 ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-dark:   #085041;
+      --green-mid:    #0F6E56;
+      --green:        #1D9E75;
+      --green-light:  #5DCAA5;
+      --green-pale:   #E1F5EE;
+      --coral:        #D85A30;
+      --amber:        #BA7517;
+      --text:         #1a1a1a;
+      --text-sub:     #5a5a5a;
+      --border:       #d8d8d8;
+      --bg:           #f7f8f6;
+      --white:        #ffffff;
+      --radius:       10px;
+      --shadow:       0 2px 16px rgba(0,0,0,0.07);
+    }
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── 레이아웃 ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ── 헤더 ── */
+    .page-header {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem 2rem 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border-top: 5px solid var(--green);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--green-pale);
+      color: var(--green-mid);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .page-header h1 {
+      font-family: 'Nanum Myeongjo', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-sub);
+    }
+
+    /* ── 안내 박스 ── */
+    .notice {
+      background: var(--green-pale);
+      border: 1px solid var(--green-light);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .notice-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .notice p {
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--green-dark);
+    }
+    .notice strong { font-weight: 600; }
+
+    /* ── 카드 ── */
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green-mid);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* ── 기본정보 그리드 ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .info-grid .full { grid-column: 1 / -1; }
+    .field-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .req { color: var(--coral); font-size: 14px; line-height: 1; }
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(29,158,117,0.13);
+    }
+    textarea { resize: vertical; min-height: 120px; line-height: 1.75; }
+
+    /* ── 질문 블록 ── */
+    .q-block { margin-bottom: 0; }
+    .q-block + .q-block { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed #e8e8e8; }
+    .q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+    .q-num {
+      min-width: 28px; height: 28px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .q-title { font-size: 15px; font-weight: 600; line-height: 1.5; }
+    .q-hint {
+      font-size: 12.5px; color: var(--text-sub); font-style: italic;
+      line-height: 1.65; margin: 0 0 9px 40px;
+    }
+    .char-row { display: flex; justify-content: flex-end; margin-top: 6px; }
+    .char-count { font-size: 11.5px; color: #aaa; }
+    .char-count.warn { color: var(--amber); }
+    .char-count.ok   { color: var(--green); font-weight: 600; }
+
+    /* ── 제출 버튼 ── */
+    .submit-wrap { text-align: center; margin-top: 2rem; }
+    .submit-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 12px;
+      padding: 14px 44px; font-size: 16px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background 0.18s, transform 0.1s;
+      box-shadow: 0 4px 14px rgba(29,158,117,0.35);
+    }
+    .submit-btn:hover { background: var(--green-mid); }
+    .submit-btn:active { transform: scale(0.98); }
+    .submit-btn:disabled { background: var(--green-light); cursor: not-allowed; box-shadow: none; }
+
+    /* ── 로딩 스피너 ── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── 에러 박스 ── */
+    .err-box {
+      background: #FCEBEB; border: 1px solid #F09595;
+      border-radius: 8px; padding: 11px 15px;
+      font-size: 13px; color: #791F1F;
+      margin-top: 14px; display: none;
+    }
+
+    /* ── 성공 화면 ── */
+    .success-screen {
+      display: none;
+      background: var(--white); border-radius: 20px;
+      padding: 3.5rem 2rem; text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .success-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--green-pale);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 34px;
+    }
+    .success-title {
+      font-family: 'Nanum Myeongjo', serif;
+      font-size: 22px; font-weight: 700; margin-bottom: 10px;
+    }
+    .success-sub { font-size: 14px; color: var(--text-sub); line-height: 1.8; }
+    .reset-btn {
+      margin-top: 1.75rem;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--text-sub); border-radius: 8px;
+      padding: 9px 22px; font-size: 13px; font-family: inherit; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .reset-btn:hover { background: var(--bg); }
+
+    /* ── 반응형 ── */
+    @media (max-width: 500px) {
+      body { padding: 1rem 0.75rem 3rem; }
+      .card { padding: 1.25rem 1.25rem; }
+      .page-header { padding: 1.5rem 1.25rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .info-grid .full { grid-column: 1; }
+      .page-header h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="page-header">
+    <div class="badge">동아리 봉사활동</div>
+    <h1>봉사활동 소감문</h1>
+    <p>생활기록부 기록용 · 성실하고 구체적으로 작성해 주세요</p>
+  </div>
+
+  <!-- 안내 박스 -->
+  <div class="notice">
+    <div class="notice-icon">💡</div>
+    <p>
+      단순히 <strong>"재미있었다", "보람 있었다"</strong>라고 쓰기보다,
+      내가 맡은 <strong>역할</strong>, 활동 중 한 <strong>행동</strong>,
+      <strong>느낀 점</strong>, <strong>배운 점</strong>, 앞으로 <strong>실천하고 싶은 점</strong>이
+      드러나도록 구체적으로 작성해 주세요.<br>
+      이 소감문은 <strong>생활기록부 기록에 참고</strong>될 수 있으므로 성실하게 작성해 주기 바랍니다.
+    </p>
+  </div>
+
+  <!-- 메인 폼 -->
+  <div id="mainForm">
+
+    <!-- 기본 정보 -->
+    <div class="card">
+      <div class="card-title">기본 정보</div>
+      <div class="info-grid">
+        <div>
+          <div class="field-label"><span class="req">*</span> 이름</div>
+          <input type="text" id="name" placeholder="홍길동" />
+        </div>
+        <div>
+          <div class="field-label"><span class="req">*</span> 학번 (반/번호)</div>
+          <input type="text" id="sid" placeholder="예: 2-3반 15번" />
+        </div>
+        <div class="full">
+          <div class="field-label"><span class="req">*</span> 봉사활동 일자</div>
+          <input type="date" id="actDate" />
+        </div>
+        <div class="full">
+          <div class="field-label">봉사활동명 / 장소</div>
+          <input type="text" id="actName" placeholder="예: ○○ 요양원 방문 봉사" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 소감 질문 -->
+    <div class="card" id="questionsCard">
+      <div class="card-title">소감 작성</div>
+      <div id="questionsArea"></div>
+    </div>
+
+    <div class="err-box" id="errBox"></div>
+
+    <div class="submit-wrap">
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+        ✉ 소감문 제출하기
+      </button>
+    </div>
+  </div>
+
+  <!-- 성공 화면 -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-circle">✅</div>
+    <div class="success-title">제출 완료!</div>
+    <div class="success-sub" id="successMsg"></div>
+    <button class="reset-btn" onclick="resetForm()">↩ 다시 작성하기</button>
+  </div>
+
+</div>
+
+<script>
+  // ──────────────────────────────────────────
+  //  ★ Google Apps Script 웹 앱 URL을 여기에 입력
+  // ──────────────────────────────────────────
+  const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+  // 예시: 'https://script.google.com/macros/s/AKfycbxXXXX.../exec'
+
+  // ──────────────────────────────────────────
+
+  const questions = [
+    {
+      q: '오늘 봉사활동에서 내가 맡은 역할은 무엇이었나요?',
+      hint: '예: 어떤 팀에서 어떤 업무를 담당했는지, 구체적인 역할명과 내용을 적어 주세요.',
+      min: 80
+    },
+    {
+      q: '맡은 역할을 수행하면서 내가 보여 준 태도나 노력은 무엇인가요?',
+      hint: '예: 어떤 상황에서, 어떤 행동을 했는지 — 나의 태도와 노력이 드러나도록 써 주세요.',
+      min: 100
+    },
+    {
+      q: '봉사활동을 통해 새롭게 배운 점은 무엇인가요?',
+      hint: '예: 몰랐던 사실, 새롭게 느낀 점, 앞으로 실천하고 싶은 것 등을 구체적으로 적어 주세요.',
+      min: 100
+    },
+    {
+      q: '활동 중 어려웠던 점과 이를 해결하기 위해 노력한 점은 무엇인가요?',
+      hint: '예: 어떤 어려움이 있었고, 그것을 어떻게 해결하려 했는지 과정을 써 주세요.',
+      min: 100
+    },
+    {
+      q: '이번 활동을 통해 성장했다고 느낀 점은 무엇인가요?',
+      hint: '예: 활동 전후로 달라진 생각, 깨달은 점, 앞으로의 다짐을 구체적으로 적어 주세요.',
+      min: 100
+    }
+  ];
+
+  // 질문 렌더링
+  const area = document.getElementById('questionsArea');
+  questions.forEach((item, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${i + 1}</div>
+        <div class="q-title">${item.q}</div>
+      </div>
+      <div class="q-hint">${item.hint}</div>
+      <textarea id="ans${i}" rows="5"
+        placeholder="여기에 작성해 주세요..."
+        oninput="updateCount(${i})"></textarea>
+      <div class="char-row">
+        <span class="char-count" id="cnt${i}">0 / 최소 ${item.min}자</span>
+      </div>
+    `;
+    area.appendChild(block);
+  });
+
+  function updateCount(i) {
+    const len = document.getElementById('ans' + i).value.length;
+    const min = questions[i].min;
+    const el = document.getElementById('cnt' + i);
+    el.textContent = len + ' / 최소 ' + min + '자';
+    el.className = 'char-count' + (len === 0 ? '' : len < min ? ' warn' : ' ok');
+  }
+
+  async function submitForm() {
+    const name    = document.getElementById('name').value.trim();
+    const sid     = document.getElementById('sid').value.trim();
+    const date    = document.getElementById('actDate').value;
+    const actName = document.getElementById('actName').value.trim();
+    const errBox  = document.getElementById('errBox');
+    errBox.style.display = 'none';
+
+    if (!name)  { alert('이름을 입력해 주세요.'); return; }
+    if (!sid)   { alert('학번을 입력해 주세요.'); return; }
+    if (!date)  { alert('봉사활동 일자를 선택해 주세요.'); return; }
+
+    const answers = [];
+    for (let i = 0; i < questions.length; i++) {
+      const val = document.getElementById('ans' + i).value.trim();
+      if (val.length < questions[i].min) {
+        alert(`${i + 1}번 답변이 너무 짧습니다.\n최소 ${questions[i].min}자 이상 작성해 주세요.`);
+        document.getElementById('ans' + i).focus();
+        return;
+      }
+      answers.push(val);
+    }
+
+    if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      errBox.textContent = '⚠ 관리자 설정 필요: index.html의 SCRIPT_URL을 Apps Script URL로 교체해 주세요.';
+      errBox.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> 제출 중...';
+
+    const payload = { name, sid, date, actName,
+      ans0: answers[0], ans1: answers[1],
+      ans2: answers[2], ans3: answers[3], ans4: answers[4] };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',   // Apps Script CORS 우회 (정상 동작)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      showSuccess(name);
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '✉ 소감문 제출하기';
+      errBox.textContent = '⚠ 제출 중 오류가 발생했습니다. 인터넷 연결을 확인하거나 선생님께 문의해 주세요.';
+      errBox.style.display = 'block';
+    }
+  }
+
+  function showSuccess(name) {
+    document.getElementById('mainForm').style.display = 'none';
+    const sc = document.getElementById('successScreen');
+    sc.style.display = 'block';
+    document.getElementById('successMsg').innerHTML =
+      `<strong>${name}</strong> 학생의 소감문이 성공적으로 제출되었습니다.<br>
+       담당 선생님이 확인 후 생활기록부에 반영할 예정입니다.<br>
+       성실하게 작성해 주어서 고맙습니다 😊`;
+  }
+
+  function resetForm() {
+    document.getElementById('successScreen').style.display = 'none';
+    document.getElementById('mainForm').style.display = 'block';
+    ['name','sid','actDate','actName'].forEach(id => document.getElementById(id).value = '');
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = false;
+    btn.innerHTML = '✉ 소감문 제출하기';
+    for (let i = 0; i < questions.length; i++) {
+      document.getElementById('ans' + i).value = '';
+      updateCount(i);
+    }
+    document.getElementById('errBox').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
