@@ -400,16 +400,11 @@
 
 <script>
   // ── URL을 localStorage에서 불러옴 (파일 수정 불필요) ──
-  let SCRIPT_URL = localStorage.getItem('volunteer_script_url') || '';
+  let SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxj0hDGaCRxAeePEA2c8u8duH6xccV8bEoL75KhF8_-ch-7-lLeh1cs1Qtvw3cxAmj/exec';
 
   window.addEventListener('DOMContentLoaded', () => {
-    if (!SCRIPT_URL) {
-      document.getElementById('adminScreen').style.display = 'flex';
-      document.getElementById('appContainer').style.display = 'none';
-    } else {
-      document.getElementById('adminScreen').style.display = 'none';
-      document.getElementById('appContainer').style.display = 'block';
-    }
+    document.getElementById('adminScreen').style.display = 'none';
+    document.getElementById('appContainer').style.display = 'block';
   });
 
   function saveAdminUrl() {
