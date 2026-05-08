@@ -237,6 +237,62 @@
     }
     .reset-btn:hover { background: var(--bg); }
 
+    /* ── 관리자 설정 화면 ── */
+    .admin-screen {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .admin-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      width: 100%;
+      border-top: 5px solid var(--green);
+    }
+    .admin-card h2 {
+      font-family: 'Nanum Myeongjo', serif;
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .admin-card .admin-sub {
+      font-size: 13px; color: var(--text-sub);
+      margin-bottom: 1.5rem; line-height: 1.6;
+    }
+    .admin-label {
+      font-size: 12px; font-weight: 600;
+      color: var(--text-sub); margin-bottom: 6px;
+    }
+    .admin-input {
+      width: 100%; padding: 10px 13px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 13px; font-family: inherit; color: var(--text);
+      background: var(--white); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      margin-bottom: 10px;
+    }
+    .admin-input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(29,158,117,.13);
+    }
+    .admin-save-btn {
+      width: 100%; padding: 12px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-size: 15px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background .18s;
+    }
+    .admin-save-btn:hover { background: var(--green-mid); }
+    .admin-err { font-size: 12px; color: #a33; margin-top: 6px; display: none; }
+    .admin-hint {
+      margin-top: 1.25rem; padding: 10px 13px;
+      background: var(--green-pale); border-radius: 8px;
+      font-size: 12px; color: var(--green-dark); line-height: 1.65;
+    }
+
     /* ── 반응형 ── */
     @media (max-width: 500px) {
       body { padding: 1rem 0.75rem 3rem; }
@@ -249,7 +305,28 @@
   </style>
 </head>
 <body>
-<div class="container">
+<!-- 관리자 URL 설정 화면 -->
+<div class="admin-screen" id="adminScreen" style="display:none">
+  <div class="admin-card">
+    <h2>⚙️ 초기 설정</h2>
+    <p class="admin-sub">
+      선생님만 보이는 화면입니다.<br>
+      Google Apps Script 배포 후 받은 URL을 입력하고 저장해 주세요.<br>
+      한 번만 설정하면 이후엔 이 화면이 나타나지 않습니다.
+    </p>
+    <div class="admin-label">Apps Script 웹 앱 URL</div>
+    <input class="admin-input" type="text" id="adminUrlInput"
+      placeholder="https://script.google.com/macros/s/.../exec" />
+    <div class="admin-err" id="adminErr">올바른 Apps Script URL을 입력해 주세요.</div>
+    <button class="admin-save-btn" onclick="saveAdminUrl()">저장하고 시작하기</button>
+    <div class="admin-hint">
+      💡 URL 확인: Apps Script → 배포 → 배포 관리 → 웹 앱 URL 복사<br>
+      형식: <code>https://script.google.com/macros/s/AKfy.../exec</code>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="appContainer">
 
   <!-- 헤더 -->
   <div class="page-header">
@@ -322,13 +399,32 @@
 </div>
 
 <script>
-  // ──────────────────────────────────────────
-  //  ★ Google Apps Script 웹 앱 URL을 여기에 입력
-  // ──────────────────────────────────────────
-  const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
-  // 예시: 'https://script.google.com/macros/s/AKfycbxXXXX.../exec'
+  // ── URL을 localStorage에서 불러옴 (파일 수정 불필요) ──
+  let SCRIPT_URL = localStorage.getItem('volunteer_script_url') || '';
 
-  // ──────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    if (!SCRIPT_URL) {
+      document.getElementById('adminScreen').style.display = 'flex';
+      document.getElementById('appContainer').style.display = 'none';
+    } else {
+      document.getElementById('adminScreen').style.display = 'none';
+      document.getElementById('appContainer').style.display = 'block';
+    }
+  });
+
+  function saveAdminUrl() {
+    const val = document.getElementById('adminUrlInput').value.trim();
+    const err = document.getElementById('adminErr');
+    if (!val.startsWith('https://script.google.com/macros/')) {
+      err.style.display = 'block'; return;
+    }
+    err.style.display = 'none';
+    localStorage.setItem('volunteer_script_url', val);
+    SCRIPT_URL = val;
+    document.getElementById('adminScreen').style.display = 'none';
+    document.getElementById('appContainer').style.display = 'block';
+  }
+  // ───────────────────────────────────────────
 
   const questions = [
     {
@@ -410,8 +506,8 @@
       answers.push(val);
     }
 
-    if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-      errBox.textContent = '⚠ 관리자 설정 필요: index.html의 SCRIPT_URL을 Apps Script URL로 교체해 주세요.';
+    if (!SCRIPT_URL) {
+      errBox.textContent = '⚠ URL이 설정되지 않았습니다. 페이지를 새로고침하고 URL을 입력해 주세요.';
       errBox.style.display = 'block';
       return;
     }
